@@ -1,0 +1,49 @@
+<svg style="background-color: #222" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<g>
+<g>
+<path d="M50,327 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="329">
+0
+</text>
+<path d="M50,290 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="292">
+1000
+</text>
+<path d="M50,253 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="255">
+2000
+</text>
+<path d="M50,216 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="218">
+3000
+</text>
+<path d="M50,178 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="180">
+4000
+</text>
+<path d="M50,141 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="143">
+5000
+</text>
+<path d="M50,104 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="106">
+6000
+</text>
+<path d="M50,67 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="69">
+7000
+</text>
+<path d="M50,30 H549" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="12" text-anchor="left" x="552" y="32">
+8000
+</text>
+</g>
+<g>
+<path d="M50,306 L144,320 L236,316 L329,312 L329,320 L441,319 L442,301 L457,297 L492,293 L496,282 L549,279" fill="none" opacity="0.8" stroke="#e9967a" stroke-linejoin="round" stroke-width="2"/>
+<path d="M144,224 L329,168 L441,226 L442,241 L457,241 L492,225 L496,225 L549,241" fill="none" opacity="0.8" stroke="#9cd3d3" stroke-linejoin="round" stroke-width="2"/>
+<path d="M50,297 L236,52 L329,52 L441,312 L442,319 L457,312 L492,319 L496,312 L549,312" fill="none" opacity="0.8" stroke="#e91e63" stroke-linejoin="round" stroke-width="2"/>
+<path d="M441,300 L442,300 L457,300 L496,300" fill="none" opacity="0.8" stroke="#795548" stroke-linejoin="round" stroke-width="2"/>
+<path d="M236,296 L329,291 L441,280 L442,170 L457,241 L492,244 L496,235 L549,243" fill="none" opacity="0.8" stroke="#8bc34a" stroke-linejoin="round" stroke-width="2"/>
+</g>
+</g>
+</svg>
