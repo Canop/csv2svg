@@ -32,14 +32,14 @@ impl Tbl {
             seqs,
         })
     }
-    pub fn x_count(&self) -> usize {
-        self.seqs[0].len()
-    }
-    pub fn y_count(&self) -> usize {
+    pub fn seqs_count(&self) -> usize {
         self.seqs.len()
     }
+    pub fn y_seqs_count(&self) -> usize {
+        self.seqs.len() - 1
+    }
     pub fn dim(&self) -> (usize, usize) {
-        (self.x_count(), self.y_count())
+        (self.seqs_count(), self.seqs[0].len())
     }
     pub fn x_seq(&self) -> &Seq {
         &self.seqs[0]

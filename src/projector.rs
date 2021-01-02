@@ -1,20 +1,6 @@
-
-pub struct IntRect {
-    pub left: i64,
-    pub top: i64,
-    pub width: i64,
-    pub height: i64,
-}
-impl IntRect {
-    pub fn new<I: Into<i64>>(left: I, top: I, width: I, height: I) -> Self {
-        Self {
-            left: left.into(),
-            top: top.into(),
-            width: width.into(),
-            height: height.into(),
-        }
-    }
-}
+use {
+    crate::*,
+};
 
 pub struct Projector {
     rx: f64,

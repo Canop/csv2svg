@@ -27,7 +27,7 @@ impl Graph {
         let (y_min, y_max) = tbl.y_min_max();
         let scale = Scale::new(y_min, y_max);
         let sr = IntRect::new(x_seq.min, scale.max, x_seq.max - x_seq.min, -scale.range());
-        let (top, right, bottom, left) = (40, 50, 60, 50);
+        let (top, right, bottom, left) = (40, 50, 85, 70);
         let gr = IntRect::new(
             left,
             top,
@@ -43,6 +43,30 @@ impl Graph {
             projector,
             scale,
         }
+    }
+    fn legend_group(&self) -> node::element::Group {
+        let mut group = node::element::Group::new();
+        let mut x = 0;
+        let y = 10;
+        let w = self.width / self.tbl.y_seqs_count();
+        for (seq_idx, y_seq) in self.tbl.y_seqs().enumerate() {
+            let square = node::element::Rectangle::new()
+                .set("x", x + 4)
+                .set("y", 10)
+                .set("width", 8)
+                .set("height", 8)
+                .set("fill", COLORS[seq_idx]);
+            group.append(square);
+            let label = element::Text::new()
+                .set("x", x + 14)
+                .set("y", y + 7)
+                .set("fill", LEGEND_COLOR)
+                .set("font-size", 10)
+                .add(node::Text::new(&y_seq.header));
+            group.append(label);
+            x += w;
+        }
+        group
     }
     fn y_scale_group(&self) -> node::element::Group {
         let mut group = node::element::Group::new();
@@ -64,8 +88,48 @@ impl Graph {
                 .set("y", self.projector.project_y(*tick) + 2)
                 .set("fill", TICK_LABEL_COLOR)
                 .set("text-anchor", "left")
-                .set("font-size", 12)
+                .set("font-size", 10)
                 .add(node::Text::new(tick.to_string()));
+            group.append(tick_label);
+        }
+        group
+    }
+    fn x_ticks_group(&self) -> node::element::Group {
+        let mut group = node::element::Group::new();
+        let x_seq = &self.tbl.x_seq();
+        let y = self.gr.bottom();
+        struct Tick {
+            idx: usize,
+            x: i64,
+            tx: i64,
+        }
+        let mut ticks = Vec::new();
+        for idx in 0..x_seq.len() {
+            let x = x_seq.ival[idx].unwrap();
+            let tx = self.projector.project_x(x);
+            ticks.push(Tick { idx, x, tx });
+            let data = element::path::Data::new()
+                .move_to((tx, y - 5))
+                .vertical_line_to(y);
+            let path = element::Path::new()
+                .set("fill", "none")
+                .set("stroke", TICK_LINE_COLOR)
+                .set("stroke-width", 1)
+                .set("opacity", 0.5)
+                .set("d", data);
+            group.append(path);
+        }
+        // we'll improve the ticks position to avoid overlap
+        // and we draw them
+        for tick in ticks {
+            let tick_label = element::Text::new()
+                .set("x", tick.tx)
+                .set("y", y)
+                .set("fill", TICK_LABEL_COLOR)
+                .set("text-anchor", "end")
+                .set("font-size", 8)
+		.set("transform", format!("rotate(-45 {} {})", tick.tx, y))
+                .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
             group.append(tick_label);
         }
         group
@@ -93,7 +157,9 @@ impl Graph {
     fn graph_group(&self) -> node::element::Group {
         let mut graph = node::element::Group::new();
         graph.append(self.y_scale_group());
+        graph.append(self.x_ticks_group());
         graph.append(self.curbs_group());
+        graph.append(self.legend_group());
         graph
     }
     pub fn build_svg(&self) -> Document {

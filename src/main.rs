@@ -10,6 +10,7 @@ mod projector;
 mod scale;
 mod seq;
 mod raw;
+mod rect;
 mod tbl;
 
 pub use {
@@ -21,6 +22,7 @@ pub use {
     scale::*,
     seq::*,
     raw::*,
+    rect::*,
     tbl::*,
 };
 

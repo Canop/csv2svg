@@ -14,6 +14,7 @@ pub static COLORS: &[&str] = &[
     "#959e75",
 ];
 
+pub static LEGEND_COLOR: &str = "#eee";
 pub static TICK_LINE_COLOR: &str = "#aad";
 pub static TICK_LABEL_COLOR: &str = "#eee";
 pub static DOCUMENT_STYLE: &str = "background-color: #222";
