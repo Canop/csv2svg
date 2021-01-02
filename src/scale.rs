@@ -1,4 +1,3 @@
-
 #[derive(Debug)]
 pub struct Scale {
     pub min: i64,
@@ -15,7 +14,7 @@ impl Scale {
         if min > 0 && (max - min) * 4 > max {
             min = 0;
         }
-        let l = ((max-min) as f64).log10().floor() as u32;
+        let l = ((max - min) as f64).log10().floor() as u32;
         let d = 10i64.pow(l);
         min = min.div_euclid(d);
         let mut tick = min;
@@ -27,13 +26,10 @@ impl Scale {
                 break;
             }
         }
-        min -= d / 3;
-        max += d / 3;
+        max = ticks[ticks.len() - 1];
         Self { min, max, ticks }
     }
     pub fn range(&self) -> i64 {
         self.max - self.min
     }
-
 }
-

@@ -1,10 +1,4 @@
-use {
-    crate::*,
-    anyhow::*,
-    chrono::{
-        DateTime,
-    },
-};
+use {crate::*, anyhow::*, chrono::DateTime};
 
 #[derive(Debug)]
 pub struct Seq {
@@ -56,10 +50,7 @@ impl Seq {
                     }
                 };
                 ival[x] = Some(v);
-                min_max = Some(min_max.map_or(
-                    (v, v),
-                    |mm| (mm.0.min(v), mm.1.max(v))
-                ));
+                min_max = Some(min_max.map_or((v, v), |mm| (mm.0.min(v), mm.1.max(v))));
             }
         }
         nature
@@ -74,13 +65,15 @@ impl Seq {
                     max,
                 }
             })
-            .ok_or(anyhow!("empty column"))
+            .ok_or_else(||anyhow!("empty column"))
     }
     pub fn is_full_and_increasing(&self) -> bool {
         for idx in 1..self.ival.len() {
-            match (self.ival.get(idx-1), self.ival.get(idx)) {
+            match (self.ival.get(idx - 1), self.ival.get(idx)) {
                 (Some(a), Some(b)) if a < b => {} // ok
-                _ => { return false; }
+                _ => {
+                    return false;
+                }
             }
         }
         true
@@ -89,4 +82,3 @@ impl Seq {
         self.raw.len()
     }
 }
-

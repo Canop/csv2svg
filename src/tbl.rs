@@ -1,7 +1,4 @@
-use {
-    crate::*,
-    anyhow::*,
-};
+use {crate::*, anyhow::*};
 
 /// this table is garanteed to contain at least 2 sequences.
 #[derive(Debug)]
@@ -28,9 +25,7 @@ impl Tbl {
         if seqs.len() < 2 {
             bail!("not enough usable columns")
         }
-        Ok(Self {
-            seqs,
-        })
+        Ok(Self { seqs })
     }
     pub fn seqs_count(&self) -> usize {
         self.seqs.len()
@@ -50,9 +45,8 @@ impl Tbl {
     pub fn y_min_max(&self) -> (i64, i64) {
         let mut y_seqs = self.y_seqs();
         let first_y = y_seqs.next().unwrap();
-        y_seqs.fold(
-            (first_y.min, first_y.max),
-            |(min, max), seq| (min.min(seq.min), max.max(seq.max)),
-        )
+        y_seqs.fold((first_y.min, first_y.max), |(min, max), seq| {
+            (min.min(seq.min), max.max(seq.max))
+        })
     }
 }

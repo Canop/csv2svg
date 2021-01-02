@@ -1,6 +1,4 @@
-use {
-    crate::*,
-};
+use crate::*;
 
 pub struct Projector {
     rx: f64,
@@ -19,18 +17,22 @@ impl Projector {
         let sy = src.top;
         let dx = dst.left;
         let dy = dst.top;
-        Self { rx, ry, sx, dx, sy, dy }
+        Self {
+            rx,
+            ry,
+            sx,
+            dx,
+            sy,
+            dy,
+        }
     }
     pub fn project_x(&self, x: i64) -> i64 {
-        self.dx + ( ((x - self.sx) as f64) * self.rx ) as i64
+        self.dx + (((x - self.sx) as f64) * self.rx) as i64
     }
     pub fn project_y(&self, y: i64) -> i64 {
-        self.dy + ( ((y - self.sy) as f64) * self.ry ) as i64
+        self.dy + (((y - self.sy) as f64) * self.ry) as i64
     }
     pub fn project_point(&self, p: (i64, i64)) -> (i64, i64) {
-        (
-            self.project_x(p.0),
-            self.project_y(p.1),
-        )
+        (self.project_x(p.0), self.project_y(p.1))
     }
 }

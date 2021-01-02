@@ -1,10 +1,4 @@
-use {
-    anyhow::*,
-    std::{
-        io::Read,
-    },
-};
-
+use {anyhow::*, std::io::Read};
 
 #[derive(Debug)]
 pub struct RawCol {
@@ -43,7 +37,7 @@ impl RawTbl {
                 let cell = cells.next();
                 col.cells.push(
                     cell.filter(|&s| s.chars().any(|c| !c.is_whitespace()))
-                        .map(|s| s.to_string())
+                        .map(|s| s.to_string()),
                 );
             }
         }

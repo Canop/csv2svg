@@ -1,0 +1,119 @@
+<svg style="background-color: #222" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+<g font-family="Arial, Helvetica, sans-serif">
+<g>
+<path d="M70,315 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="317">
+0
+</text>
+<path d="M70,278 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="280">
+1000
+</text>
+<path d="M70,242 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="244">
+2000
+</text>
+<path d="M70,206 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="208">
+3000
+</text>
+<path d="M70,170 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="172">
+4000
+</text>
+<path d="M70,134 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="136">
+5000
+</text>
+<path d="M70,98 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="100">
+6000
+</text>
+<path d="M70,62 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="64">
+7000
+</text>
+<path d="M70,26 H550" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="10 7" stroke-width="1"/>
+<text fill="#eee" font-size="10" text-anchor="left" x="552" y="28">
+8000
+</text>
+</g>
+<g>
+<path d="M70,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 70 323)" x="70" y="323">
+2020-12-25T11:24:49Z
+</text>
+<path d="M70,312 V315 L70,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M160,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 160 323)" x="160" y="323">
+2020-12-26T12:00:20Z
+</text>
+<path d="M160,312 V315 L160,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M249,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 249 323)" x="249" y="323">
+2020-12-27T12:00:22Z
+</text>
+<path d="M249,312 V315 L249,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M338,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 338 323)" x="338" y="323">
+2020-12-28T12:21:27Z
+</text>
+<path d="M338,312 V315 L338,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M441,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 441 323)" x="441" y="323">
+2020-12-29T16:13:49Z
+</text>
+<path d="M441,312 V315 L441,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M446,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<path d="M461,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 461 323)" x="461" y="323">
+2020-12-29T21:43:01Z
+</text>
+<path d="M461,312 V315 L461,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M494,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 488 323)" x="488" y="323">
+2020-12-30T06:42:39Z
+</text>
+<path d="M494,312 V315 L488,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M498,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 498 323)" x="498" y="323">
+2020-12-30T07:41:22Z
+</text>
+<path d="M498,312 V315 L498,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+<path d="M550,26 V315" fill="none" opacity="0.5" stroke="#aad" stroke-dasharray="1 3" stroke-width="1"/>
+<text fill="#eee" font-size="8" text-anchor="end" transform="rotate(-45 550 323)" x="550" y="323">
+2020-12-30T21:43:01Z
+</text>
+<path d="M550,312 V315 L550,320" fill="none" opacity="0.5" stroke="#aad" stroke-width="1"/>
+</g>
+<g>
+<path d="M70,294 L160,307 L249,304 L338,300 L441,307 L446,289 L461,286 L494,281 L498,271 L550,268" fill="none" opacity="0.8" stroke="#e9967a" stroke-linejoin="round" stroke-width="2"/>
+<path d="M160,214 L338,160 L441,144 L446,137 L461,158 L494,165 L498,165 L550,231" fill="none" opacity="0.8" stroke="#9cd3d3" stroke-linejoin="round" stroke-width="2"/>
+<path d="M70,286 L249,47 L441,264 L446,271 L461,300 L494,307 L498,300 L550,300" fill="none" opacity="0.8" stroke="#e91e63" stroke-linejoin="round" stroke-width="2"/>
+<path d="M441,66 L446,71 L461,71 L494,67 L498,64" fill="none" opacity="0.8" stroke="#795548" stroke-linejoin="round" stroke-width="2"/>
+<path d="M249,285 L338,274 L441,200 L446,162 L461,230 L494,234 L498,225 L550,160" fill="none" opacity="0.8" stroke="#8bc34a" stroke-linejoin="round" stroke-width="2"/>
+</g>
+<g>
+<rect fill="#e9967a" height="8" width="8" x="4" y="10"/>
+<text fill="#eee" font-size="10" x="14" y="17">
+something
+</text>
+<rect fill="#9cd3d3" height="8" width="8" x="124" y="10"/>
+<text fill="#eee" font-size="10" x="134" y="17">
+another thing
+</text>
+<rect fill="#e91e63" height="8" width="8" x="244" y="10"/>
+<text fill="#eee" font-size="10" x="254" y="17">
+a third one
+</text>
+<rect fill="#795548" height="8" width="8" x="364" y="10"/>
+<text fill="#eee" font-size="10" x="374" y="17">
+whatever
+</text>
+<rect fill="#8bc34a" height="8" width="8" x="484" y="10"/>
+<text fill="#eee" font-size="10" x="494" y="17">
+bof
+</text>
+</g>
+</g>
+</svg>

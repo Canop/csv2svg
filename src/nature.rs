@@ -1,8 +1,4 @@
-use {
-    chrono::{
-        FixedOffset,
-    },
-};
+use chrono::FixedOffset;
 
 #[derive(Debug)]
 pub enum Nature {
@@ -12,6 +8,4 @@ pub enum Nature {
     Integer,
 }
 
-impl Nature {
-}
-
+impl Nature {}

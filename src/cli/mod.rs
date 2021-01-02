@@ -2,14 +2,7 @@ mod args;
 
 pub use args::*;
 
-use {
-    crate::*,
-    anyhow::*,
-    argh,
-    std::{
-        io,
-    },
-};
+use {crate::*, anyhow::*, argh, std::io};
 
 pub fn run() -> Result<()> {
     let args: Args = argh::from_env();

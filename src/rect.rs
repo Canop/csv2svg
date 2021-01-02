@@ -1,7 +1,4 @@
-
-use {
-    num_traits::Num,
-};
+use num_traits::Num;
 
 pub struct Rect<N: Num + Copy> {
     pub left: N,
@@ -20,6 +17,9 @@ impl<N: Num + Copy> Rect<N> {
     }
     pub fn bottom(&self) -> N {
         self.top + self.height
+    }
+    pub fn right(&self) -> N {
+        self.left + self.width
     }
 }
 

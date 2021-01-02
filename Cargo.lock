@@ -80,7 +80,6 @@ dependencies = [
  "libc",
  "num-integer",
  "num-traits",
- "serde",
  "time",
  "winapi",
 ]
@@ -115,6 +114,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2b2466559f260f48ad25fe6317b3c8dac77b5bdb5763ac7d9d6103530663bc90"
 dependencies = [
  "memchr",
+]
+
+[[package]]
+name = "csv2svg"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "argh",
+ "chrono",
+ "cli-log",
+ "csv",
+ "directories-next",
+ "log",
+ "num-traits",
+ "svg",
 ]
 
 [[package]]
@@ -264,36 +278,6 @@ name = "serde"
 version = "1.0.118"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "06c64263859d87aa2eb554587e2d23183398d617427327cf2b3d0ed8c69e4800"
-dependencies = [
- "serde_derive",
-]
-
-[[package]]
-name = "serde_derive"
-version = "1.0.118"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c84d3526699cd55261af4b941e4e725444df67aa4f9e6a3564f18030d12672df"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
-name = "starry"
-version = "0.1.2"
-dependencies = [
- "anyhow",
- "argh",
- "chrono",
- "cli-log",
- "csv",
- "directories-next",
- "log",
- "num-traits",
- "serde",
- "svg",
-]
 
 [[package]]
 name = "svg"
