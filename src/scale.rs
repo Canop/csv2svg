@@ -16,7 +16,7 @@ impl Scale {
         }
         let l = ((max - min) as f64).log10().floor() as u32;
         let d = 10i64.pow(l);
-        min = min.div_euclid(d);
+        min = (min / d) * d;
         let mut tick = min;
         let mut ticks = vec![tick];
         loop {
