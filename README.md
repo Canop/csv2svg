@@ -45,10 +45,10 @@ which produces this SVG file:
 * [x] most basic features
 * [x] time abscissa
 * [x] integer abscissa
+* [ ] implicit abscissa
 * [ ] float abscissa
 * [ ] float y values
 * [ ] disjoint scales
-* [ ] anything a little subtle
 
 The goal of this project is **not** to build a do-it-all grapher nor a graph library.
 

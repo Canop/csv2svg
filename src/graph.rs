@@ -99,42 +99,23 @@ impl Graph {
         struct Tick {
             idx: usize,
             x: i64,
-            tx: i64,
-            skip_label: bool,
+            tx: Option<i64>,
         }
         let mut ticks = Vec::new();
         for idx in 0..x_seq.len() {
             let x = self.projector.project_x(x_seq.ival[idx].unwrap());
-            let tx = x;
             ticks.push(Tick {
                 idx,
                 x,
-                tx,
-                skip_label: false,
+                tx: None,
             });
         }
         // we improve the ticks position to avoid overlap
-        // and we draw them
-        let l = ticks.len();
-        let m = 10;
-        let (mut a, mut b) = (self.gr.left + m, self.gr.right() - m);
-        for i in 1..ticks.len() / 2 {
-            let tx = ticks[i].tx.max(a);
-            if tx < b {
-                a = tx + m;
-                ticks[i].tx = tx;
-            } else {
-                ticks[i].skip_label = true;
-            }
-            let idx = l - i - 1;
-            let tx = ticks[idx].tx.min(b);
-            if tx > a {
-                b = tx - m;
-                ticks[idx].tx = tx;
-            } else {
-                ticks[idx].skip_label = true;
-            }
+        let dots = ticks.iter().map(|t| t.x).collect();
+        for (idx, dot) in unoverlap(dots, 10).drain(..).enumerate() {
+            ticks[idx].tx = dot;
         }
+        // and we draw them
         for (idx, tick) in ticks.iter().enumerate() {
             if ticks.len() < 20 || idx == 0 || idx == ticks.len() - 1 {
                 let data = element::path::Data::new()
@@ -149,20 +130,11 @@ impl Graph {
                     .set("d", data);
                 group.append(path);
             }
-            if !tick.skip_label {
-                let tick_label = element::Text::new()
-                    .set("x", tick.tx)
-                    .set("y", y + 8)
-                    .set("fill", TICK_LABEL_COLOR)
-                    .set("text-anchor", "end")
-                    .set("font-size", 8)
-                    .set("transform", format!("rotate(-45 {} {})", tick.tx, y + 8))
-                    .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
-                group.append(tick_label);
+            if let Some(tx) = tick.tx {
                 let data = element::path::Data::new()
                     .move_to((tick.x, y - 3))
                     .vertical_line_to(y)
-                    .line_to((tick.tx, y + 5));
+                    .line_to((tx, y + 7));
                 let path = element::Path::new()
                     .set("fill", "none")
                     .set("stroke", TICK_LINE_COLOR)
@@ -170,6 +142,15 @@ impl Graph {
                     .set("opacity", 0.5)
                     .set("d", data);
                 group.append(path);
+                let tick_label = element::Text::new()
+                    .set("x", tx+1)
+                    .set("y", y + 9)
+                    .set("fill", TICK_LABEL_COLOR)
+                    .set("text-anchor", "end")
+                    .set("font-size", 8)
+                    .set("transform", format!("rotate(-45 {} {})", tx+1, y + 9))
+                    .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
+                group.append(tick_label);
             }
         }
         group
@@ -197,8 +178,8 @@ impl Graph {
         group
     }
     fn graph_group(&self) -> node::element::Group {
-        let mut graph =
-            node::element::Group::new().set("font-family", "Arial, Helvetica, sans-serif");
+        let mut graph = node::element::Group::new()
+            .set("font-family", "Arial, Helvetica, sans-serif");
         graph.append(self.y_scale_group());
         graph.append(self.x_ticks_group());
         graph.append(self.curbs_group());

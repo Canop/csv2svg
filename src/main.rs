@@ -12,9 +12,20 @@ mod scale;
 mod seq;
 mod skin;
 mod tbl;
+mod unoverlap;
 
 pub use {
-    app::*, graph::*, nature::*, projector::*, raw::*, rect::*, scale::*, seq::*, skin::*, tbl::*,
+    app::*,
+    graph::*,
+    nature::*,
+    projector::*,
+    raw::*,
+    rect::*,
+    scale::*,
+    seq::*,
+    skin::*,
+    tbl::*,
+    unoverlap::*,
 };
 
 fn main() -> anyhow::Result<()> {
