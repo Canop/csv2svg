@@ -6,9 +6,38 @@
 
 # csv2svg
 
-Automatically build a SVG graph from a csv document.
+Build a SVG graph from a csv document.
 
-Can be piped.
+## Installation
+
+You must have [Rust installed](https://rustup.rs). Do
+
+```cli
+cargo install csv2svg
+```
+
+## Usage
+
+### Viewing the SVG graph in a browser
+
+If you don't pipe the output of csv2svg, the graph is automatically displayed in your browser.
+
+```cli
+app_whose_output_is_csv | csv2svg
+```
+
+```cli
+csv2svg < some/file.csv
+```
+### Making a file from the SVG graph
+
+```cli
+app_whose_output_is_csv | csv2svg > some/file.svg
+```
+
+```cli
+csv2svg < some/file.csv > some/file.svg
+```
 
 ## Example
 
@@ -31,10 +60,10 @@ time,something,another thing,a third one,whatever,bof
 It may be used with no configuration:
 
 ```cli
-csv2svg < examples/irregular-times.csv > examples/irregular-times.svg
+csv2svg < examples/irregular-times.csv
 ```
 
-which produces this SVG file:
+which produces this:
 
 ![irregular-times](examples/irregular-times.svg)
 
@@ -45,10 +74,12 @@ which produces this SVG file:
 * [x] most basic features
 * [x] time abscissa
 * [x] integer abscissa
-* [ ] implicit abscissa
+* [ ] time stripes
+* [ ] bar graph on discrete non-time x
 * [ ] float abscissa
 * [ ] float y values
 * [ ] disjoint scales
+* [ ] Windows compatibility (if somebody really wants it)
 
 The goal of this project is **not** to build a do-it-all grapher nor a graph library.
 

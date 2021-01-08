@@ -4,6 +4,7 @@ extern crate log;
 mod app;
 mod cli;
 mod graph;
+mod html;
 mod nature;
 mod projector;
 mod raw;
@@ -17,6 +18,7 @@ mod unoverlap;
 pub use {
     app::*,
     graph::*,
+    html::*,
     nature::*,
     projector::*,
     raw::*,

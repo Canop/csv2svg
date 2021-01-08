@@ -1,4 +1,8 @@
-use {crate::*, anyhow::*, chrono::DateTime};
+use {
+    crate::*,
+    anyhow::*,
+    chrono::DateTime,
+};
 
 #[derive(Debug)]
 pub struct Seq {
@@ -39,7 +43,7 @@ impl Seq {
                     }
                     None => {
                         if let Ok(dt) = DateTime::parse_from_rfc3339(s) {
-                            nature = Some(Nature::Date(dt.offset().clone()));
+                            nature = Some(Nature::Date(*dt.offset()));
                             dt.timestamp_millis()
                         } else if let Ok(int) = s.parse::<i64>() {
                             nature = Some(Nature::Integer);
