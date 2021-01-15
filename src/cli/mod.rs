@@ -6,7 +6,11 @@ use {
     crate::*,
     anyhow::*,
     argh,
-    std::io::{self, Write},
+    std::{
+        fs::File,
+        io::{self, Write},
+        path::PathBuf,
+    },
 };
 
 pub fn run() -> Result<()> {
@@ -24,23 +28,53 @@ pub fn run() -> Result<()> {
     let graph = Graph::new(tbl);
     let svg = graph.build_svg();
     if is_output_piped() {
-        // if the output is piped, we produce the requested
-        // SVG (which may end in a file for example)
+        // when the output is piped, the default format is svg
         let mut w = io::stdout();
-        debug!("writing svg to stdout");
-        svg::write(&mut w, &svg)?;
+        match args.format {
+            Some(Format::Html) => {
+                html::write_embedded(&mut w, &svg)?;
+            }
+            _ => {
+                svg::write(&mut w, &svg)?;
+            }
+        }
         w.write_all(b"\n")?;
     } else {
-        // output isn't piped, we open the graph in the browser
-        let path = html::write_in_temp_file(&svg)?;
-        debug!("wrote html in temp file {:?}", &path);
+        // when the output isn't piped, we'll write a temp file
+        // and ask the system to open it;
+        // As it's the most expressive format, we prefer to
+        // open some HTML in a browser
+        let (mut w, path) = temp_file()?;
+        match args.format {
+            Some(Format::Svg) => {
+                svg::write(&mut w, &svg)?;
+            }
+            _ => {
+                html::write_embedded(&mut w, &svg)?;
+            }
+        }
         open::that(path)?;
     }
     Ok(())
 }
+
 
 fn is_output_piped() -> bool {
     unsafe {
         libc::isatty(libc::STDOUT_FILENO) == 0
     }
 }
+
+pub fn temp_file() -> io::Result<(File, PathBuf)> {
+    tempfile::Builder::new()
+        .prefix("csv2svg-")
+        .suffix(".html")
+        .rand_bytes(12)
+        .tempfile()?
+        .keep()
+        .map_err(|_| io::Error::new(
+            io::ErrorKind::Other,
+            "temp file can't be kept",
+        ))
+}
+

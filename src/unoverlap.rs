@@ -1,25 +1,21 @@
 
 /// build a new vec of dots with no dot less than
 /// `margin` from another one.
-/// When this can't be done, some dots are replaced
-/// with `None`.
+/// When this can't be done, return `None`.
 /// The `dots` vec is assumed
 /// - to contain 2 or more elements
 /// - to be strictly increasing
 /// Extremities (first and last point) are guaranteed to be
-/// returned as `Some` unchanged.
+/// returned unchanged.
 pub fn unoverlap(
     mut dots: Vec<i64>,
     margin: i64,
-) -> Vec<Option<i64>> {
+) -> Option<Vec<i64>> {
     let l = dots.len();
     let w = dots[l-1] - dots[0];
     assert!(w > 0);
     if margin * (l - 1) as i64 > w {
-        let mut res = vec![None; l];
-        res[0] = Some(dots[0]);
-        res[l-1] = Some(dots[l-1]);
-        return res;
+        return None;
     }
     #[derive(Debug)]
     struct Subset {
@@ -138,7 +134,7 @@ pub fn unoverlap(
         //        .join(",")
         //);
     }
-    dots.drain(..).map(Some).collect()
+    Some(dots)
 }
 
 
@@ -146,61 +142,53 @@ pub fn unoverlap(
 mod unoverlap_tests {
     use super::*;
 
-    macro_rules! some {
-        [$($token:literal),* $(,)?] => {
-            &[
-                $(Some($token),)*
-            ]
-        }
-    }
-
     #[test]
     fn test_unoverlap_1() {
         assert_eq!(
             unoverlap(vec![0, 49, 51, 100], 10),
-            &[Some(0), Some(45), Some(55), Some(100)],
+            Some(vec![0, 45, 55, 100]),
         );
     }
     #[test]
     fn test_unoverlap_2() {
         assert_eq!(
             unoverlap(vec![0, 51, 52, 53, 100], 10),
-            some![0, 42, 52, 62, 100],
+            Some(vec![0, 42, 52, 62, 100]),
         );
     }
     #[test]
     fn test_unoverlap_3() {
         assert_eq!(
             unoverlap(vec![0, 51, 52, 53, 100], 60),
-            &[Some(0), None, None, None, Some(100)],
+            None,
         );
     }
     #[test]
     fn test_unoverlap_4() {
         assert_eq!(
             unoverlap(vec![0, 1, 2, 20, 51, 52, 53, 100], 10),
-            some![0, 10, 20, 30, 42, 52, 62, 100],
+            Some(vec![0, 10, 20, 30, 42, 52, 62, 100]),
         );
     }
     #[test]
     fn test_unoverlap_5() {
         assert_eq!(
             unoverlap(vec![0, 1, 2, 20, 26, 28, 51, 52, 53, 100], 10),
-            some![0, 10, 20, 30, 40, 50, 60, 70, 80, 100],
+            Some(vec![0, 10, 20, 30, 40, 50, 60, 70, 80, 100]),
         );
     }
     #[test]
     fn test_unoverlap_6() {
         assert_eq!(
             unoverlap(vec![0, 1, 2, 20, 26, 28, 51, 52, 53, 99, 100], 10),
-            some![0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            Some(vec![0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]),
         );
     }
     #[test]
     fn test_unoverlap_7() {
         assert_eq!(
             unoverlap(vec![0, 16, 17, 20, 86, 87, 99, 100], 10),
-            some![0, 10, 20, 30, 70, 80, 90, 100],
+            Some(vec![0, 10, 20, 30, 70, 80, 90, 100]),
         );
     }
 }

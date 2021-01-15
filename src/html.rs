@@ -2,7 +2,6 @@ use {
     anyhow::*,
     std::{
         io::self,
-        path::PathBuf,
     },
     svg::{
         Document,
@@ -13,6 +12,10 @@ static CSS: &str = r#"
 html, body { margin:0; padding:0; overflow:hidden; }
 body { background:#222; }
 svg { position:absolute; top:5%; left:5%; width:90%; height:90%; }
+svg g.fad g.opt { opacity:.5; }
+svg g.fad:hover g.opt { opacity:1; }
+svg g.inv g.opt { display:none; }
+svg g.inv:hover g.opt { display:block; }
 "#;
 
 pub fn write_embedded<W: io::Write>(mut w: W, svg: &Document) -> Result<()> {
@@ -26,21 +29,6 @@ pub fn write_embedded<W: io::Write>(mut w: W, svg: &Document) -> Result<()> {
     writeln!(w, "</body>")?;
     writeln!(w, "</html>")?;
     Ok(())
-}
-
-pub fn write_in_temp_file(svg: &Document) -> Result<PathBuf> {
-    let (w, path) = tempfile::Builder::new()
-        .prefix("csv2svg-")
-        .suffix(".html")
-        .rand_bytes(12)
-        .tempfile()?
-        .keep()
-        .map_err(|_| io::Error::new(
-            io::ErrorKind::Other,
-            "temp file can't be kept",
-        ))?;
-    write_embedded(w, svg)?;
-    Ok(path)
 }
 
 

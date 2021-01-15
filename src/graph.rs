@@ -15,6 +15,7 @@ pub struct Graph {
     gr: IntRect,
     projector: Projector,
     scale: Scale,
+    hover: bool, // whether to build elements only visible on hover
 }
 
 impl Graph {
@@ -40,6 +41,7 @@ impl Graph {
             gr,
             projector,
             scale,
+            hover: true,
         }
     }
     fn legend_group(&self) -> node::element::Group {
@@ -99,7 +101,8 @@ impl Graph {
         struct Tick {
             idx: usize,
             x: i64,
-            tx: Option<i64>,
+            tx: i64,
+            vis: Visibility, // visibility when non hovered
         }
         let mut ticks = Vec::new();
         for idx in 0..x_seq.len() {
@@ -107,51 +110,74 @@ impl Graph {
             ticks.push(Tick {
                 idx,
                 x,
-                tx: None,
+                tx: x,
+                vis: Visibility::Visible,
             });
         }
         // we improve the ticks position to avoid overlap
         let dots = ticks.iter().map(|t| t.x).collect();
-        for (idx, dot) in unoverlap(dots, 10).drain(..).enumerate() {
-            ticks[idx].tx = dot;
+        if let Some(dots) = unoverlap(dots, 10) {
+            // we can show all ticks
+            for (idx, dot) in dots.iter().enumerate() {
+                if idx!=0 && idx!=ticks.len()-1 {
+                    ticks[idx].tx = *dot;
+                    ticks[idx].vis = Visibility::Faded;
+                }
+            }
+        } else {
+            // ticks will be shown only on hover
+            for idx in 1..ticks.len()-1 {
+                ticks[idx].vis = Visibility::Invisible;
+            }
         }
         // and we draw them
-        for (idx, tick) in ticks.iter().enumerate() {
-            if ticks.len() < 20 || idx == 0 || idx == ticks.len() - 1 {
-                let data = element::path::Data::new()
-                    .move_to((tick.x, self.gr.top))
-                    .vertical_line_to(y);
-                let path = element::Path::new()
-                    .set("fill", "none")
-                    .set("stroke", TICK_LINE_COLOR)
-                    .set("stroke-width", 1)
-                    .set("stroke-dasharray", "1 3")
-                    .set("opacity", 0.5)
-                    .set("d", data);
-                group.append(path);
-            }
-            if let Some(tx) = tick.tx {
-                let data = element::path::Data::new()
-                    .move_to((tick.x, y - 3))
-                    .vertical_line_to(y)
-                    .line_to((tx, y + 7));
-                let path = element::Path::new()
-                    .set("fill", "none")
-                    .set("stroke", TICK_LINE_COLOR)
-                    .set("stroke-width", 1)
-                    .set("opacity", 0.5)
-                    .set("d", data);
-                group.append(path);
-                let tick_label = element::Text::new()
-                    .set("x", tx+1)
-                    .set("y", y + 9)
-                    .set("fill", TICK_LABEL_COLOR)
-                    .set("text-anchor", "end")
-                    .set("font-size", 8)
-                    .set("transform", format!("rotate(-45 {} {})", tx+1, y + 9))
-                    .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
-                group.append(tick_label);
-            }
+        for tick in ticks {
+            let mut tick_group = node::element::Group::new()
+                .set("class", tick.vis.css_class());
+            let data = element::path::Data::new()
+                .move_to((tick.x, self.gr.top))
+                .vertical_line_to(y);
+            let hoverable_path = element::Path::new()
+                .set("fill", "none")
+                .set("stroke", TICK_LINE_COLOR)
+                .set("stroke-width", 4)
+                .set("opacity", 0)
+                .set("d", data.clone());
+            tick_group.append(hoverable_path);
+            let path = element::Path::new()
+                .set("fill", "none")
+                .set("stroke", TICK_LINE_COLOR)
+                .set("stroke-width", 1)
+                .set("stroke-dasharray", "1 3")
+                .set("opacity", 0.5)
+                .set("d", data);
+            tick_group.append(path);
+            // the opt_group may be hidden or faded when not hovered, depending
+            // on tick.vis
+            let mut tick_opt_group = node::element::Group::new()
+                .set("class", "opt");
+            let data = element::path::Data::new()
+                .move_to((tick.x, y - 3))
+                .vertical_line_to(y)
+                .line_to((tick.tx, y + 7));
+            let path = element::Path::new()
+                .set("fill", "none")
+                .set("stroke", TICK_LINE_COLOR)
+                .set("stroke-width", 1)
+                .set("opacity", 0.5)
+                .set("d", data);
+            tick_opt_group.append(path);
+            let tick_label = element::Text::new()
+                .set("x", tick.tx+1)
+                .set("y", y + 9)
+                .set("fill", TICK_LABEL_COLOR)
+                .set("text-anchor", "end")
+                .set("font-size", 8)
+                .set("transform", format!("rotate(-45 {} {})", tick.tx+1, y + 9))
+                .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
+            tick_opt_group.append(tick_label);
+            tick_group.append(tick_opt_group);
+            group.append(tick_group);
         }
         group
     }

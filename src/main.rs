@@ -14,6 +14,7 @@ mod seq;
 mod skin;
 mod tbl;
 mod unoverlap;
+mod visibility;
 
 pub use {
     app::*,
@@ -28,6 +29,7 @@ pub use {
     skin::*,
     tbl::*,
     unoverlap::*,
+    visibility::*,
 };
 
 fn main() -> anyhow::Result<()> {
