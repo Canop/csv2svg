@@ -1,6 +1,6 @@
 [package]
 name = "csv2svg"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["dystroy <denys.seguret@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/Canop/csv2svg"
