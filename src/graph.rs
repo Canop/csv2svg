@@ -20,8 +20,8 @@ pub struct Graph {
 
 impl Graph {
     pub fn new(tbl: Tbl) -> Self {
-        let width = 600;
-        let height = 400;
+        let width = 800;
+        let height = 500;
         let x_seq = &tbl.x_seq();
         let (y_min, y_max) = tbl.y_min_max();
         let scale = Scale::new(y_min, y_max);
@@ -79,7 +79,7 @@ impl Graph {
                 .set("fill", "none")
                 .set("stroke", TICK_LINE_COLOR)
                 .set("stroke-width", 1)
-                .set("opacity", 0.5)
+                .set("opacity", 0.4)
                 .set("stroke-dasharray", "10 7")
                 .set("d", data);
             group.append(path);
@@ -88,7 +88,7 @@ impl Graph {
                 .set("y", self.projector.project_y(*tick) + 2)
                 .set("fill", TICK_LABEL_COLOR)
                 .set("text-anchor", "left")
-                .set("font-size", 10)
+                .set("font-size", 8)
                 .add(node::Text::new(tick.to_string()));
             group.append(tick_label);
         }
@@ -182,24 +182,81 @@ impl Graph {
         group
     }
     fn curbs_group(&self) -> node::element::Group {
+        struct Point {
+            x: i64,
+            y: i64,
+            label: String,
+        }
         let mut group = node::element::Group::new();
         let x_seq = &self.tbl.x_seq();
         for (seq_idx, y_seq) in self.tbl.y_seqs().enumerate() {
-            let mut points = x_seq
+            let mut points_group = node::element::Group::new();
+            let points = x_seq
                 .ival
                 .iter()
                 .map(|ox| ox.unwrap()) // x sequence is guaranteed without hole
                 .zip(y_seq.ival.iter())
                 .filter_map(|(x, oy)| oy.map(|y| (x, y)))
-                .map(|p| self.projector.project_point(p));
+                .map(|p| {
+                    let (x, y) = self.projector.project_point(p);
+                    let label = format!("{}", p.1);
+                    Point { x, y, label }
+                });
+            let mut data = element::path::Data::new();
+            for (idx, point) in points.enumerate() {
+                if idx == 0 {
+                    data = data.move_to((point.x, point.y));
+                } else {
+                    data = data.line_to((point.x, point.y));
+                }
+                if self.hover {
+                    let mut point_group = node::element::Group::new()
+                        .set("class", "inv");
+                    let circle = node::element::Circle::new()
+                        .set("fill", COLORS[seq_idx])
+                        .set("cx", point.x)
+                        .set("cy", point.y)
+                        .set("opacity", 0)
+                        .set("r", 9);
+                    point_group.append(circle);
+                    let mut point_opt_group = node::element::Group::new()
+                        .set("class", "opt");
+                    let point_label_shadow = element::Text::new()
+                        .set("x", point.x - 5)
+                        .set("y", point.y - 10)
+                        .set("stroke", "#222")
+                        .set("stroke-width", 5)
+                        .set("text-anchor", "end")
+                        .set("font-size", 8)
+                        .add(node::Text::new(&point.label));
+                    point_opt_group.append(point_label_shadow);
+                    let circle = node::element::Circle::new()
+                        .set("fill", COLORS[seq_idx])
+                        .set("cx", point.x)
+                        .set("cy", point.y)
+                        .set("r", 4);
+                    point_opt_group.append(circle);
+                    let point_label = element::Text::new()
+                        .set("x", point.x - 5)
+                        .set("y", point.y - 10)
+                        .set("fill", TICK_LABEL_COLOR)
+                        .set("text-anchor", "end")
+                        .set("font-size", 8)
+                        .add(node::Text::new(&point.label));
+                    point_opt_group.append(point_label);
+                    point_group.append(point_opt_group);
+                    points_group.append(point_group);
+                }
+            }
             let path = element::Path::new()
                 .set("fill", "none")
                 .set("stroke", COLORS[seq_idx])
-                .set("stroke-width", 2)
+                .set("stroke-width", 3)
                 .set("opacity", 0.8)
                 .set("stroke-linejoin", "round")
-                .set("d", points_data(&mut points));
+                .set("d", data);
             group.append(path);
+            group.append(points_group);
         }
         group
     }
@@ -225,12 +282,4 @@ impl Graph {
         writer.write_all(b"\n")?;
         Ok(())
     }
-}
-
-fn points_data(points: &mut dyn Iterator<Item = (i64, i64)>) -> element::path::Data {
-    let mut data = element::path::Data::new().move_to(points.next().unwrap());
-    for point in points {
-        data = data.line_to(point);
-    }
-    data
 }
