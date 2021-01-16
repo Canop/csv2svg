@@ -182,80 +182,74 @@ impl Graph {
         group
     }
     fn curbs_group(&self) -> node::element::Group {
-        struct Point {
-            x: i64,
-            y: i64,
-            label: String,
-        }
         let mut group = node::element::Group::new();
         let x_seq = &self.tbl.x_seq();
         for (seq_idx, y_seq) in self.tbl.y_seqs().enumerate() {
             let mut points_group = node::element::Group::new();
-            let points = x_seq
-                .ival
-                .iter()
-                .map(|ox| ox.unwrap()) // x sequence is guaranteed without hole
-                .zip(y_seq.ival.iter())
-                .filter_map(|(x, oy)| oy.map(|y| (x, y)))
-                .map(|p| {
-                    let (x, y) = self.projector.project_point(p);
-                    let label = format!("{}", p.1);
-                    Point { x, y, label }
-                });
-            let mut data = element::path::Data::new();
-            for (idx, point) in points.enumerate() {
-                if idx == 0 {
-                    data = data.move_to((point.x, point.y));
-                } else {
-                    data = data.line_to((point.x, point.y));
-                }
-                if self.hover {
-                    let mut point_group = node::element::Group::new()
-                        .set("class", "inv");
-                    let circle = node::element::Circle::new()
-                        .set("fill", COLORS[seq_idx])
-                        .set("cx", point.x)
-                        .set("cy", point.y)
-                        .set("opacity", 0)
-                        .set("r", 9);
-                    point_group.append(circle);
-                    let mut point_opt_group = node::element::Group::new()
-                        .set("class", "opt");
-                    let point_label_shadow = element::Text::new()
-                        .set("x", point.x - 5)
-                        .set("y", point.y - 10)
-                        .set("stroke", "#222")
-                        .set("stroke-width", 5)
-                        .set("text-anchor", "end")
-                        .set("font-size", 8)
-                        .add(node::Text::new(&point.label));
-                    point_opt_group.append(point_label_shadow);
-                    let circle = node::element::Circle::new()
-                        .set("fill", COLORS[seq_idx])
-                        .set("cx", point.x)
-                        .set("cy", point.y)
-                        .set("r", 4);
-                    point_opt_group.append(circle);
-                    let point_label = element::Text::new()
-                        .set("x", point.x - 5)
-                        .set("y", point.y - 10)
-                        .set("fill", TICK_LABEL_COLOR)
-                        .set("text-anchor", "end")
-                        .set("font-size", 8)
-                        .add(node::Text::new(&point.label));
-                    point_opt_group.append(point_label);
-                    point_group.append(point_opt_group);
-                    points_group.append(point_group);
+            let mut curve_data = element::path::Data::new();
+            for idx in 0..y_seq.len() {
+                let p = (
+                    x_seq.raw.get(idx),
+                    x_seq.ival.get(idx),
+                    y_seq.raw.get(idx),
+                    y_seq.ival.get(idx),
+                );
+                if let (Some(Some(raw_x)), Some(Some(x)), Some(Some(raw_y)), Some(Some(y))) = p {
+                    let (x, y) = self.projector.project_point((*x, *y));
+                    let label = format!("{}, {}", raw_x, raw_y);
+                    if idx == 0 {
+                        curve_data = curve_data.move_to((x, y));
+                    } else {
+                        curve_data = curve_data.line_to((x, y));
+                    }
+                    if self.hover {
+                        let mut point_group = node::element::Group::new()
+                            .set("class", "inv");
+                        let circle = node::element::Circle::new()
+                            .set("fill", COLORS[seq_idx])
+                            .set("cx", x)
+                            .set("cy", y)
+                            .set("opacity", 0)
+                            .set("r", 9);
+                        point_group.append(circle);
+                        let mut point_opt_group = node::element::Group::new()
+                            .set("class", "opt");
+                        let point_label_shadow = element::Text::new()
+                            .set("x", x - 5)
+                            .set("y", y - 10)
+                            .set("stroke", "#222")
+                            .set("stroke-width", 5)
+                            .set("text-anchor", "end")
+                            .set("font-size", 8)
+                            .add(node::Text::new(&label));
+                        point_opt_group.append(point_label_shadow);
+                        let circle = node::element::Circle::new()
+                            .set("fill", COLORS[seq_idx])
+                            .set("cx", x)
+                            .set("cy", y)
+                            .set("r", 4);
+                        point_opt_group.append(circle);
+                        let point_label = element::Text::new()
+                            .set("x", x - 5)
+                            .set("y", y - 10)
+                            .set("fill", TICK_LABEL_COLOR)
+                            .set("text-anchor", "end")
+                            .set("font-size", 8)
+                            .add(node::Text::new(label));
+                        point_opt_group.append(point_label);
+                        point_group.append(point_opt_group);
+                        points_group.append(point_group);
+                    }
                 }
             }
-            let path = element::Path::new()
+            let curve = element::Path::new()
                 .set("fill", "none")
                 .set("stroke", COLORS[seq_idx])
                 .set("stroke-width", 3)
                 .set("opacity", 0.8)
                 .set("stroke-linejoin", "round")
-                .set("d", data);
-            group.append(path);
+                .set("d", curve_data);
+            group.append(curve);
             group.append(points_group);
         }
         group
