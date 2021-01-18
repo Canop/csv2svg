@@ -6,7 +6,7 @@ pub struct Scale {
 }
 impl Scale {
     pub fn new(mut min: i64, mut max: i64) -> Self {
-        debug_assert!(min < max);
+        debug_assert!(min <= max);
         if max < min + 3 {
             max += 2;
             min -= 2;

@@ -21,6 +21,7 @@ pub struct RawTbl {
     pub cols: Vec<RawCol>,
 }
 impl RawTbl {
+    /// read from csv
     pub fn read<R: Read>(r: R) -> Result<Self> {
         let mut csv_reader = csv::Reader::from_reader(r);
         let mut cols = Vec::new();

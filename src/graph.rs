@@ -187,6 +187,7 @@ impl Graph {
         for (seq_idx, y_seq) in self.tbl.y_seqs().enumerate() {
             let mut points_group = node::element::Group::new();
             let mut curve_data = element::path::Data::new();
+            let mut started = false;
             for idx in 0..y_seq.len() {
                 let p = (
                     x_seq.raw.get(idx),
@@ -197,10 +198,11 @@ impl Graph {
                 if let (Some(Some(raw_x)), Some(Some(x)), Some(Some(raw_y)), Some(Some(y))) = p {
                     let (x, y) = self.projector.project_point((*x, *y));
                     let label = format!("{}, {}", raw_x, raw_y);
-                    if idx == 0 {
-                        curve_data = curve_data.move_to((x, y));
-                    } else {
+                    if started {
                         curve_data = curve_data.line_to((x, y));
+                    } else {
+                        curve_data = curve_data.move_to((x, y));
+                        started = true;
                     }
                     if self.hover {
                         let mut point_group = node::element::Group::new()
@@ -210,7 +212,7 @@ impl Graph {
                             .set("cx", x)
                             .set("cy", y)
                             .set("opacity", 0)
-                            .set("r", 9);
+                            .set("r", 8);
                         point_group.append(circle);
                         let mut point_opt_group = node::element::Group::new()
                             .set("class", "opt");
@@ -268,6 +270,7 @@ impl Graph {
         Document::new()
             .set("viewBox", (0, 0, width, height))
             .set("style", DOCUMENT_STYLE)
+            //.add(node::element::Style::new(SVG_STYLE))
             .add(self.graph_group())
     }
     pub fn write_svg<W: io::Write>(&self, mut writer: W) -> Result<()> {

@@ -1,7 +1,7 @@
 use {
     crate::*,
     anyhow::*,
-    chrono::DateTime,
+    chrono::{DateTime, FixedOffset, SecondsFormat, Utc},
 };
 
 #[derive(Debug)]
@@ -13,8 +13,51 @@ pub struct Seq {
     pub min: i64,
     pub max: i64,
 }
-
 impl Seq {
+    pub fn from_increasing_times(header: String, times: Vec<DateTime<Utc>>) -> Result<Self> {
+        if times.is_empty() {
+            bail!("empty column");
+        }
+        let mut raw = Vec::new();
+        let mut ival = Vec::new();
+        for time in times {
+            raw.push(Some(time.to_rfc3339_opts(SecondsFormat::Secs, true)));
+            ival.push(Some(time.timestamp_millis()));
+        }
+        Ok(Self {
+            header,
+            nature: Nature::Date(FixedOffset::east(0)), // should be Utc if I understand chrono
+            raw,
+            min: ival[0].unwrap(),
+            max: ival[ival.len()-1].unwrap(),
+            ival,
+        })
+    }
+    pub fn from_integers(header: String, ival: Vec<Option<i64>>) -> Result<Self> {
+        let mut min_max: Option<(i64, i64)> = None;
+        let mut raw = vec![None; ival.len()];
+        for (idx, val) in ival.iter().enumerate() {
+            if let Some(val) = val {
+                raw[idx] = Some(val.to_string());
+                min_max = Some(match min_max {
+                    Some((min, max)) => (min.min(*val), max.max(*val)),
+                    None => (*val, *val),
+                });
+            }
+        }
+        if let Some((min, max)) = min_max {
+            Ok(Self {
+                header,
+                nature: Nature::Integer,
+                raw,
+                ival,
+                min,
+                max,
+            })
+        } else {
+            Err(anyhow!("Empty column"))
+        }
+    }
     pub fn new(raw_col: RawCol) -> Result<Self> {
         let RawCol { header, cells: raw } = raw_col;
         let mut ival = vec![None; raw.len()];

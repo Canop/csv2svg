@@ -30,6 +30,7 @@ cargo install csv2svg
 ### Viewing the SVG graph in a browser
 
 If you don't pipe the output of csv2svg, the graph is automatically displayed in your browser.
+For increasing readability the graph reacts to mouse hovering.
 
 ```cli
 app_whose_output_is_csv | csv2svg
@@ -74,7 +75,7 @@ csv2svg < examples/irregular-times.csv
 
 which produces this:
 
-![irregular-times](examples/irregular-times.svg)
+![irregular-times](examples/irregular-times.png)
 
 ## Progress
 
@@ -89,7 +90,5 @@ which produces this:
 * [ ] float y values
 * [ ] disjoint scales
 * [ ] Windows compatibility (if somebody really wants it)
-
-The goal of this project is **not** to build a do-it-all grapher nor a graph library.
 
 I might incorporate features you'd like to have, or fix the problems you encounter, provided you tell me about them on Miaou.

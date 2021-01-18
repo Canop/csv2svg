@@ -7,7 +7,7 @@ pub struct Tbl {
 }
 
 impl Tbl {
-    pub fn new(mut raw_tbl: RawTbl) -> Result<Self> {
+    pub fn from_raw(mut raw_tbl: RawTbl) -> Result<Self> {
         if raw_tbl.row_count() < 2 {
             bail!("two rows needed for a graph");
         }
@@ -24,6 +24,15 @@ impl Tbl {
         }
         if seqs.len() < 2 {
             bail!("not enough usable columns")
+        }
+        Ok(Self { seqs })
+    }
+    pub fn from_seqs(seqs: Vec<Seq>) -> Result<Self> {
+        if seqs.len() < 2 {
+            bail!("not enough columns");
+        }
+        if !seqs[0].is_full_and_increasing() {
+            bail!("first sequence must be full and increasing");
         }
         Ok(Self { seqs })
     }

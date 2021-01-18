@@ -22,7 +22,7 @@ pub fn run() -> Result<()> {
     }
     let raw_tbl = RawTbl::read(io::stdin())?;
     //debug!("raw tbl: {:#?}", &raw_tbl);
-    let tbl = Tbl::new(raw_tbl)?;
+    let tbl = Tbl::from_raw(raw_tbl)?;
     //debug!("tbl: {:#?}", &tbl);
     debug!("tbl dim: {:?}", tbl.dim());
     let graph = Graph::new(tbl);
