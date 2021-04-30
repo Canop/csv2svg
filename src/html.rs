@@ -22,10 +22,10 @@ svg g.inv:hover g.opt { display:block; }
 pub fn write_embedded<W: io::Write>(mut w: W, svg: &Document) -> Result<()> {
     writeln!(w, "<!DOCTYPE HTML>")?;
     writeln!(w, "<html>")?;
-    writeln!(w, "<body>")?;
     writeln!(w, "<head>")?;
     writeln!(w, "<style type=text/css>{}</style>", CSS)?;
     writeln!(w, "</head>")?;
+    writeln!(w, "<body>")?;
     svg::write(&mut w, svg)?;
     writeln!(w, "</body>")?;
     writeln!(w, "</html>")?;
