@@ -8,9 +8,10 @@ use {
     argh,
     std::{
         fs::File,
-        io::{self, Write},
+        io::{self, Write, stdout},
         path::PathBuf,
     },
+    crossterm::tty::IsTty,
 };
 
 pub fn run() -> Result<()> {
@@ -60,9 +61,7 @@ pub fn run() -> Result<()> {
 
 
 fn is_output_piped() -> bool {
-    unsafe {
-        libc::isatty(libc::STDOUT_FILENO) == 0
-    }
+    !stdout().is_tty()
 }
 
 pub fn temp_file() -> io::Result<(File, PathBuf)> {
