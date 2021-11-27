@@ -1,6 +1,6 @@
 use {
     crate::*,
-    anyhow::*,
+    anyhow::{bail, Result},
 };
 
 /// this table is garanteed to contain at least 2 sequences.
