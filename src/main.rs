@@ -1,7 +1,7 @@
-#[macro_use] extern crate log;
+#[macro_use] extern crate cli_log;
 
 fn main() -> anyhow::Result<()> {
-    cli_log::init("csv2svg");
+    init_cli_log!();
     csv2svg::run()?;
     info!("bye");
     Ok(())
