@@ -92,3 +92,4 @@ which produces this:
 * [ ] Windows compatibility (if somebody really wants it)
 
 I might incorporate features you'd like to have, or fix the problems you encounter, provided you tell me about them on [Miaou](https://miaou.dystroy.org).
+
