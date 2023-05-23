@@ -31,3 +31,6 @@ pub use {
     unoverlap::*,
     visibility::*,
 };
+
+// Reexport svg crate
+pub use svg;

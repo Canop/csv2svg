@@ -141,7 +141,7 @@ dependencies = [
 
 [[package]]
 name = "csv2svg"
-version = "0.1.8"
+version = "0.1.9"
 dependencies = [
  "anyhow",
  "argh",
@@ -454,9 +454,9 @@ checksum = "2fd0db749597d91ff862fd1d55ea87f7855a744a8425a64695b6fca237d1dad1"
 
 [[package]]
 name = "svg"
-version = "0.10.0"
+version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e72d8b19ab05827afefcca66bf47040c1e66a0901eb814784c77d4ec118bd309"
+checksum = "02d815ad337e8449d2374d4248448645edfe74e699343dd5719139d93fa87112"
 
 [[package]]
 name = "syn"

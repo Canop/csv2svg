@@ -1,6 +1,6 @@
 [package]
 name = "csv2svg"
-version = "0.1.8"
+version = "0.1.9"
 authors = ["dystroy <denys.seguret@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/Canop/csv2svg"
@@ -20,7 +20,7 @@ libc = "0.2"
 log = "0.4"
 num-traits = "0.2.14"
 open = "1.1"
-svg = "0.10"
+svg = "0.13"
 tempfile = "3.1"
 crossterm = "0.23.2"
 
