@@ -5,7 +5,6 @@ pub use args::*;
 use {
     crate::*,
     anyhow::*,
-    argh,
     std::{
         fs::File,
         io::{self, Write, stdout},

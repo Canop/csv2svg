@@ -24,6 +24,7 @@ pub fn unoverlap(
         width: i64,
     }
     #[allow(unused_variables)]
+    #[allow(clippy::collapsible_else_if)]
     for i in 0..2*l { // 2l is probably overkill but I can't prove it
         // candidate subsets are subsets with more than margin before
         // and after and with more dots than allowed.
