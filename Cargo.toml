@@ -1,6 +1,6 @@
 [package]
 name = "csv2svg"
-version = "0.1.10"
+version = "0.1.11"
 authors = ["dystroy <denys.seguret@gmail.com>"]
 edition = "2018"
 repository = "https://github.com/Canop/csv2svg"
@@ -22,6 +22,6 @@ num-traits = "0.2.14"
 open = "1.1"
 svg = "0.13"
 tempfile = "3.1"
-crossterm = "0.24"
+crossterm = ">=0.23"
 
 [patch.crates-io]

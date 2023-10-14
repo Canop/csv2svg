@@ -96,9 +96,9 @@ dependencies = [
 
 [[package]]
 name = "crossterm"
-version = "0.24.0"
+version = "0.23.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab9f7409c70a38a56216480fba371ee460207dd8926ccf5b4160591759559170"
+checksum = "a2102ea4f781910f8a5b98dd061f4c2023f479ce7bb1236330099ceb5a93cf17"
 dependencies = [
  "bitflags",
  "crossterm_winapi",
@@ -143,7 +143,7 @@ dependencies = [
 
 [[package]]
 name = "csv2svg"
-version = "0.1.10"
+version = "0.1.11"
 dependencies = [
  "anyhow",
  "argh",
