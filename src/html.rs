@@ -1,12 +1,4 @@
-use {
-    anyhow::*,
-    std::{
-        io::self,
-    },
-    svg::{
-        Document,
-    },
-};
+use {anyhow::*, std::io, svg::Document};
 
 static CSS: &str = r#"
 html, body { margin:0; padding:0; overflow:hidden; }
@@ -31,5 +23,3 @@ pub fn write_embedded<W: io::Write>(mut w: W, svg: &Document) -> Result<()> {
     writeln!(w, "</html>")?;
     Ok(())
 }
-
-

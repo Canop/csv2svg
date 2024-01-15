@@ -1,4 +1,5 @@
-#[macro_use] extern crate log;
+#[macro_use]
+extern crate log;
 
 mod app;
 mod cli;
@@ -16,20 +17,8 @@ mod unoverlap;
 mod visibility;
 
 pub use {
-    app::*,
-    cli::*,
-    graph::*,
-    html::*,
-    nature::*,
-    projector::*,
-    raw::*,
-    rect::*,
-    scale::*,
-    seq::*,
-    skin::*,
-    tbl::*,
-    unoverlap::*,
-    visibility::*,
+    app::*, cli::*, graph::*, html::*, nature::*, projector::*, raw::*, rect::*, scale::*, seq::*,
+    skin::*, tbl::*, unoverlap::*, visibility::*,
 };
 
 // Reexport svg crate

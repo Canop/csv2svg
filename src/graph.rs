@@ -119,21 +119,20 @@ impl Graph {
         if let Some(dots) = unoverlap(dots, 10) {
             // we can show all ticks
             for (idx, dot) in dots.iter().enumerate() {
-                if idx!=0 && idx!=ticks.len()-1 {
+                if idx != 0 && idx != ticks.len() - 1 {
                     ticks[idx].tx = *dot;
                     ticks[idx].vis = Visibility::Faded;
                 }
             }
         } else {
             // ticks will be shown only on hover
-            for idx in 1..ticks.len()-1 {
+            for idx in 1..ticks.len() - 1 {
                 ticks[idx].vis = Visibility::Invisible;
             }
         }
         // and we draw them
         for tick in ticks {
-            let mut tick_group = node::element::Group::new()
-                .set("class", tick.vis.css_class());
+            let mut tick_group = node::element::Group::new().set("class", tick.vis.css_class());
             let data = element::path::Data::new()
                 .move_to((tick.x, self.gr.top))
                 .vertical_line_to(y);
@@ -154,8 +153,7 @@ impl Graph {
             tick_group.append(path);
             // the opt_group may be hidden or faded when not hovered, depending
             // on tick.vis
-            let mut tick_opt_group = node::element::Group::new()
-                .set("class", "opt");
+            let mut tick_opt_group = node::element::Group::new().set("class", "opt");
             let data = element::path::Data::new()
                 .move_to((tick.x, y - 3))
                 .vertical_line_to(y)
@@ -168,12 +166,15 @@ impl Graph {
                 .set("d", data);
             tick_opt_group.append(path);
             let tick_label = element::Text::new()
-                .set("x", tick.tx+1)
+                .set("x", tick.tx + 1)
                 .set("y", y + 9)
                 .set("fill", TICK_LABEL_COLOR)
                 .set("text-anchor", "end")
                 .set("font-size", 8)
-                .set("transform", format!("rotate(-45 {} {})", tick.tx+1, y + 9))
+                .set(
+                    "transform",
+                    format!("rotate(-45 {} {})", tick.tx + 1, y + 9),
+                )
                 .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
             tick_opt_group.append(tick_label);
             tick_group.append(tick_opt_group);
@@ -205,8 +206,7 @@ impl Graph {
                         started = true;
                     }
                     if self.hover {
-                        let mut point_group = node::element::Group::new()
-                            .set("class", "inv");
+                        let mut point_group = node::element::Group::new().set("class", "inv");
                         let circle = node::element::Circle::new()
                             .set("fill", COLORS[seq_idx])
                             .set("cx", x)
@@ -214,8 +214,7 @@ impl Graph {
                             .set("opacity", 0)
                             .set("r", 8);
                         point_group.append(circle);
-                        let mut point_opt_group = node::element::Group::new()
-                            .set("class", "opt");
+                        let mut point_opt_group = node::element::Group::new().set("class", "opt");
                         let point_label_shadow = element::Text::new()
                             .set("x", x - 5)
                             .set("y", y - 10)
@@ -257,8 +256,8 @@ impl Graph {
         group
     }
     fn graph_group(&self) -> node::element::Group {
-        let mut graph = node::element::Group::new()
-            .set("font-family", "Arial, Helvetica, sans-serif");
+        let mut graph =
+            node::element::Group::new().set("font-family", "Arial, Helvetica, sans-serif");
         graph.append(self.y_scale_group());
         graph.append(self.x_ticks_group());
         graph.append(self.curbs_group());

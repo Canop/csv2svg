@@ -26,10 +26,10 @@ impl Seq {
         }
         Ok(Self {
             header,
-            nature: Nature::Date(FixedOffset::east(0)), // should be Utc if I understand chrono
+            nature: Nature::Date(FixedOffset::east_opt(0).unwrap()), // should be Utc if I understand chrono
             raw,
             min: ival[0].unwrap(),
-            max: ival[ival.len()-1].unwrap(),
+            max: ival[ival.len() - 1].unwrap(),
             ival,
         })
     }
@@ -112,7 +112,7 @@ impl Seq {
                     max,
                 }
             })
-            .ok_or_else(||anyhow!("empty column"))
+            .ok_or_else(|| anyhow!("empty column"))
     }
     pub fn is_full_and_increasing(&self) -> bool {
         for idx in 1..self.ival.len() {
@@ -127,5 +127,8 @@ impl Seq {
     }
     pub fn len(&self) -> usize {
         self.raw.len()
+    }
+    pub fn is_empty(&self) -> bool {
+        self.raw.is_empty()
     }
 }

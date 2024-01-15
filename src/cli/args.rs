@@ -1,24 +1,18 @@
-use {
-    argh::FromArgs,
-};
+use argh::FromArgs;
 
 #[derive(Debug, FromArgs)]
 /// I need to explain this, I guess
 ///
 /// Source at https://github.com/Canop/csv2svg
 pub struct Args {
-
     #[argh(switch, short = 'v')]
     /// print the version
     pub version: bool,
 
-
-    #[argh(option, short='f')]
+    #[argh(option, short = 'f')]
     /// output format: "svg" or "html"
     pub format: Option<Format>,
 }
-
-
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Format {
@@ -32,7 +26,7 @@ impl std::str::FromStr for Format {
         match s.to_lowercase().as_ref() {
             "s" | "svg" => Ok(Self::Svg),
             "h" | "html" => Ok(Self::Html),
-            _ => Err(format!("unrecognized format {:?}", s))
+            _ => Err(format!("unrecognized format {:?}", s)),
         }
     }
 }

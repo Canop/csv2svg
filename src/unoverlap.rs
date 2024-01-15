@@ -1,4 +1,3 @@
-
 /// build a new vec of dots with no dot less than
 /// `margin` from another one.
 /// When this can't be done, return `None`.
@@ -7,12 +6,9 @@
 /// - to be strictly increasing
 /// Extremities (first and last point) are guaranteed to be
 /// returned unchanged.
-pub fn unoverlap(
-    mut dots: Vec<i64>,
-    margin: i64,
-) -> Option<Vec<i64>> {
+pub fn unoverlap(mut dots: Vec<i64>, margin: i64) -> Option<Vec<i64>> {
     let l = dots.len();
-    let w = dots[l-1] - dots[0];
+    let w = dots[l - 1] - dots[0];
     assert!(w > 0);
     if margin * (l - 1) as i64 > w {
         return None;
@@ -25,7 +21,8 @@ pub fn unoverlap(
     }
     #[allow(unused_variables)]
     #[allow(clippy::collapsible_else_if)]
-    for i in 0..2*l { // 2l is probably overkill but I can't prove it
+    for i in 0..2 * l {
+        // 2l is probably overkill but I can't prove it
         // candidate subsets are subsets with more than margin before
         // and after and with more dots than allowed.
         // The best one is the one with smallest width/dots_counts ratio.
@@ -33,7 +30,7 @@ pub fn unoverlap(
         let mut cur: Option<usize> = None; // index of the subset start
         for idx in 0..l {
             if let Some(mut first_idx) = cur {
-                if idx == l - 1 || dots[idx] + margin < dots[idx+1] {
+                if idx == l - 1 || dots[idx] + margin < dots[idx + 1] {
                     // we build the subset, starting by looking back
                     // if we must take back some points
                     while first_idx > 0 {
@@ -60,13 +57,17 @@ pub fn unoverlap(
                 }
                 // the dot is implictely added to the current subset
             } else {
-                if idx < l-1 && dots[idx] + margin > dots[idx+1] {
+                if idx < l - 1 && dots[idx] + margin > dots[idx + 1] {
                     // we start a new subset
                     cur = Some(idx);
                 }
             }
         }
-        let Subset { first_idx, width, len } = match best_subset {
+        let Subset {
+            first_idx,
+            width,
+            len,
+        } = match best_subset {
             Some(s) => s,
             None => {
                 // we should have finished
@@ -86,7 +87,7 @@ pub fn unoverlap(
         // The optimal new position of the subset is symetric around
         // the mean of its dots but we must account for the available
         // space
-        let mean = dots[first_idx..last_idx+1]
+        let mean = dots[first_idx..last_idx + 1]
             .iter()
             .map(|&d| d as f64)
             .sum::<f64>()
@@ -138,7 +139,6 @@ pub fn unoverlap(
     Some(dots)
 }
 
-
 #[cfg(test)]
 mod unoverlap_tests {
     use super::*;
@@ -159,10 +159,7 @@ mod unoverlap_tests {
     }
     #[test]
     fn test_unoverlap_3() {
-        assert_eq!(
-            unoverlap(vec![0, 51, 52, 53, 100], 60),
-            None,
-        );
+        assert_eq!(unoverlap(vec![0, 51, 52, 53, 100], 60), None,);
     }
     #[test]
     fn test_unoverlap_4() {
@@ -193,4 +190,3 @@ mod unoverlap_tests {
         );
     }
 }
-

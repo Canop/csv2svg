@@ -5,12 +5,12 @@ pub use args::*;
 use {
     crate::*,
     anyhow::*,
+    crossterm::tty::IsTty,
     std::{
         fs::File,
-        io::{self, Write, stdout},
+        io::{self, stdout, Write},
         path::PathBuf,
     },
-    crossterm::tty::IsTty,
 };
 
 pub fn run() -> Result<()> {
@@ -58,7 +58,6 @@ pub fn run() -> Result<()> {
     Ok(())
 }
 
-
 fn is_output_piped() -> bool {
     !stdout().is_tty()
 }
@@ -70,9 +69,5 @@ pub fn temp_file() -> io::Result<(File, PathBuf)> {
         .rand_bytes(12)
         .tempfile()?
         .keep()
-        .map_err(|_| io::Error::new(
-            io::ErrorKind::Other,
-            "temp file can't be kept",
-        ))
+        .map_err(|_| io::Error::new(io::ErrorKind::Other, "temp file can't be kept"))
 }
-
