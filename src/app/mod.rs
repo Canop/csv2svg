@@ -1,4 +1,4 @@
-use {anyhow::*, directories_next::ProjectDirs};
+use {anyhow::*, directories::ProjectDirs};
 
 /// return the instance of ProjectDirs holding the app specific paths
 pub fn app_dirs() -> Result<ProjectDirs> {
