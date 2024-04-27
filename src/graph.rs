@@ -57,12 +57,11 @@ impl Graph {
                 .set("height", 8)
                 .set("fill", COLORS[seq_idx]);
             group.append(square);
-            let label = element::Text::new()
+            let label = element::Text::new(&y_seq.header)
                 .set("x", x + 14)
                 .set("y", y + 7)
                 .set("fill", LEGEND_COLOR)
-                .set("font-size", 10)
-                .add(node::Text::new(&y_seq.header));
+                .set("font-size", 10);
             group.append(label);
             x += w;
         }
@@ -83,13 +82,12 @@ impl Graph {
                 .set("stroke-dasharray", "10 7")
                 .set("d", data);
             group.append(path);
-            let tick_label = element::Text::new()
+            let tick_label = element::Text::new(tick.to_string())
                 .set("x", self.gr.left + self.gr.width + 2)
                 .set("y", self.projector.project_y(*tick) + 2)
                 .set("fill", TICK_LABEL_COLOR)
                 .set("text-anchor", "left")
-                .set("font-size", 8)
-                .add(node::Text::new(tick.to_string()));
+                .set("font-size", 8);
             group.append(tick_label);
         }
         group
@@ -165,7 +163,9 @@ impl Graph {
                 .set("opacity", 0.5)
                 .set("d", data);
             tick_opt_group.append(path);
-            let tick_label = element::Text::new()
+            let tick_label = element::Text::new(
+                    x_seq.raw[tick.idx].as_ref().unwrap()
+                )
                 .set("x", tick.tx + 1)
                 .set("y", y + 9)
                 .set("fill", TICK_LABEL_COLOR)
@@ -174,8 +174,7 @@ impl Graph {
                 .set(
                     "transform",
                     format!("rotate(-45 {} {})", tick.tx + 1, y + 9),
-                )
-                .add(node::Text::new(x_seq.raw[tick.idx].as_ref().unwrap()));
+                );
             tick_opt_group.append(tick_label);
             tick_group.append(tick_opt_group);
             group.append(tick_group);
@@ -215,14 +214,13 @@ impl Graph {
                             .set("r", 8);
                         point_group.append(circle);
                         let mut point_opt_group = node::element::Group::new().set("class", "opt");
-                        let point_label_shadow = element::Text::new()
+                        let point_label_shadow = element::Text::new(&label)
                             .set("x", x - 5)
                             .set("y", y - 10)
                             .set("stroke", "#222")
                             .set("stroke-width", 5)
                             .set("text-anchor", "end")
-                            .set("font-size", 8)
-                            .add(node::Text::new(&label));
+                            .set("font-size", 8);
                         point_opt_group.append(point_label_shadow);
                         let circle = node::element::Circle::new()
                             .set("fill", COLORS[seq_idx])
@@ -230,13 +228,12 @@ impl Graph {
                             .set("cy", y)
                             .set("r", 4);
                         point_opt_group.append(circle);
-                        let point_label = element::Text::new()
+                        let point_label = element::Text::new(label)
                             .set("x", x - 5)
                             .set("y", y - 10)
                             .set("fill", TICK_LABEL_COLOR)
                             .set("text-anchor", "end")
-                            .set("font-size", 8)
-                            .add(node::Text::new(label));
+                            .set("font-size", 8);
                         point_opt_group.append(point_label);
                         point_group.append(point_opt_group);
                         points_group.append(point_group);
