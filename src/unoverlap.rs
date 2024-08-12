@@ -4,6 +4,7 @@
 /// The `dots` vec is assumed
 /// - to contain 2 or more elements
 /// - to be strictly increasing
+///
 /// Extremities (first and last point) are guaranteed to be
 /// returned unchanged.
 pub fn unoverlap(mut dots: Vec<i64>, margin: i64) -> Option<Vec<i64>> {
